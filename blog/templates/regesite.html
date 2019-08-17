@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+ {% block js %}
+     <script type="text/javascript" src="{% static 'js/register.js' %}"></script>
+     <script type="text/css" src="{% static 'css/reset.css' %}" >   </script>
+     <script type="text/javascript">
+
+
+     </script>s
+     <style type="text/css">
+     .div1{
+         float: left;
+        display: inline-block;
+        margin-top: 15px;
+         margin-left: 150px;
+     }
+     .div2{
+         {#border-bottom: 1px solid #e0e0e0;#}
+         {#border-top: 1px solid #e0e0e0;#}
+         float: right;
+         margin-right: 30px;
+         display: inline-block;
+
+
+     }
+     .center{
+         display: block;
+         {#text-align: center;#}
+     }
+     ul ,li{
+
+
+         padding: 0;
+         list-style: none;
+     }
+     ul li{
+         height: 55px;
+         margin: 10px auto;
+
+     }
+     .with{
+         display: block;
+         width: 300px;
+         text-align: center;
+
+     }
+     ul li .button{
+         padding: 0px;
+         width: 100px;
+         height: 40px;
+         display: block;
+         text-align: center;
+         {#line-height: 50px;#}
+     }
+     .regisite_top{
+         {#float: right;#}
+         width: 300px;
+         height: 40px;
+         text-align: center;
+     }
+     .page-title{
+         float: left;
+         margin-top: 10px;
+
+     }
+     .logincoin{
+         float: right;
+        height: 20px;
+        line-height: 20px;
+        font-size: 16px;
+        padding-right: 20px;
+        background: url({% static 'img/icons02.png' %}) 42px 3px no-repeat;
+        margin-top: 10px;
+     }
+     input{
+         height: 40px;
+         font-size: 15px;
+     }
+     .button{
+         width: 300px;
+         background-color: #5fb71f;
+     }
+     .error_tip{
+
+         font-size: 12px;
+         float: left;
+         margin-top: 5px;
+         height: 10px;
+         line-height: 10px;
+
+         color: #e62e2e;
+     }
+     label{
+         margin-left: 5px;
+         float: left;
+         line-height: 12px;
+         font-size: 12px;
+         margin-bottom: 0px;
+     }
+     ul li input#allow{
+         margin-top: 0px;
+         float: left;
+         height: 12px;
+
+     }
+     ul li.last_li{
+         text-align: center;
+         height: 12px;
+         margin-bottom: 20px;
+     }
+     ul li.bottom_li{
+         margin-bottom: 5px;
+     }
+     </style>
+ {% endblock %}
+{% block body %}
+		<div class="content-body">
+			<div class="container">
+				<div class="row">
+					<main class="col-md-12">
+
+						<article class="post">
+							<div class="entry-content clearfix center">
+                                <div class="div1 "><img src="{% static 'img/me.jpg' %}" alt=""></div>
+                                <form class="div2" action="{% url 'blog:Regisite' %} " method="post">
+                                    {% csrf_token %}
+                                    <div class="regisite_top">
+                                        <h4 class="page-title">Regisite</h4>
+                                        <a class="logincoin" href="{% url 'blog:login' %}">Login</a>
+                                    </div>
+                                        <h5>{{ errmsg }}</h5>
+                                    <ul class="center clearfix">
+                                         <li class="clearfix">
+                                             <input type="text" class="with" id='user_name' placeholder="Name" name="user_name" required>
+                                             <span class="error_tip" ></span>
+                                         </li  >
+                                         <li class="clearfix">
+                                             <input type="password" class="with" id="pwd" placeholder="Password" name="pwd" required>
+                                             <span class="error_tip" ></span>
+                                         </li>
+                                         <li class="clearfix">
+                                             <input type="password"  class="with" id="cpwd" placeholder="Enetr Password" name =cpwdrequired>
+                                             <span class="error_tip" ></span>
+                                         </li>
+                                         <li class="clearfix bottom_li">
+                                             <input type="text"  class="with" id="email" placeholder="Email" name="email" required>
+                                             <span class="error_tip" ></span>
+                                         </li>
+                                        <li class="clearfix last_li">
+                                             <input type="checkbox"  class="" id="allow"  name="allow" required>
+                                             <label>同意”用户使用协议“</label>
+                                             <span class="error_tip" ></span>
+                                         </li>
+
+                                        <input type="submit" class="button" required value="Regisite">
+
+
+                                    </ul>
+                                </form>
+{#								<form action="#" method="post" class="contact-form">#}
+{#									<div class="row">#}
+{#										<div class="col-md-6 col-md-offset-3">#}
+{#											<input type="text" name="name" placeholder="Name" required>#}
+{#											<input type="email" name="email" placeholder="Email" required>#}
+{#											<input type="text" name="subject" placeholder="Subject" required>#}
+{#											<textarea name="message" rows="7" placeholder="Your Message" required></textarea>#}
+{#											<button class="btn-send btn-5 btn-5b ion-ios-paperplane"><span>Drop Me a Line</span></button>#}
+{#										</div>#}
+{#									</div>	<!-- row -->#}
+{#								</form>#}
+							</div>
+						</article>
+					</main>
+				</div>
+			</div>
+		</div>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+ {% block js %}
+     <script type="text/css" src="{% static 'css/reset.css' %}" >   </script>
+     <script type="text/javascript">
+
+     </script>
+     <style type="text/css">
+     .div1{
+         float: left;
+        display: inline-block;
+        margin-top: 20px;
+         margin-left: 150px;
+     }
+     .div2{
+         {#border-bottom: 1px solid #e0e0e0;#}
+         {#border-top: 1px solid #e0e0e0;#}
+         margin-top: 40px ;
+         float: right;
+         margin-right: 30px;
+         display: inline-block;
+
+
+     }
+     .center{
+
+
+         text-align: center;
+     }
+     ul {
+         margin: 0;
+         padding: 0;
+         list-style: none;
+     }
+     input{
+         margin: 35px auto;
+         display: block;
+         text-align: center;
+
+     }
+     .with{
+         width: 300px;
+         height: 50px;
+
+     }
+     .with1{
+         margin-top: 50px;
+         width: 300px;
+         height: 50px;
+     }
+     .button{
+         padding: 0px;
+         width: 100px;
+         height: 40px;
+         {#line-height: 50px;#}
+     }
+     h4{
+         float: left;
+
+         margin-bottom: 10px;
+     }
+     .logincoin{
+         float: right;
+         margin-right: 5px;
+        height: 20px;
+        line-height: 20px;
+        font-size: 16px;
+        padding-right: 20px;
+        background: url({% static 'img/icons02.png' %}) 62px 3px no-repeat;
+        margin-bottom: 10px;
+     }
+     </style>
+ {% endblock %}
+{% block body %}
+		<div class="content-body">
+			<div class="container">
+				<div class="row">
+					<main class="col-md-12">
+
+						<article class="post">
+							<div class="entry-content clearfix center">
+                                <div class="div1 "><img src="{% static 'img/me.jpg' %}" alt=""></div>
+                                <form method="post"  action="{% url 'blog:login' %}" class="div2">
+                                    {% csrf_token %}
+                                    <h4 class="page-title">Login</h4>
+                                    <a class="logincoin" href="{% url 'blog:Regisite' %}">Regisite</a>
+
+                                    <ul class="center">
+                                         <input type="text" class="with1 with" placeholder="Name"  name="username" required>
+                                         <input type="password" class="with" placeholder="Password"  name="password" required>
+                                         <sqan>{{ errmsg }}</sqan>
+                                         <input type="submit" class="button" required value="Login">
+
+                                    </ul>
+                                </form>
+{#								<form action="#" method="post" class="contact-form">#}
+{#									<div class="row">#}
+{#										<div class="col-md-6 col-md-offset-3">#}
+{#											<input type="text" name="name" placeholder="Name" required>#}
+{#											<input type="email" name="email" placeholder="Email" required>#}
+{#											<input type="text" name="subject" placeholder="Subject" required>#}
+{#											<textarea name="message" rows="7" placeholder="Your Message" required></textarea>#}
+{#											<button class="btn-send btn-5 btn-5b ion-ios-paperplane"><span>Drop Me a Line</span></button>#}
+{#										</div>#}
+{#									</div>	<!-- row -->#}
+{#								</form>#}
+							</div>
+						</article>
+					</main>
+				</div>
+			</div>
+		</div>
+{% endblock %}

@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load staticfiles %}
+<div class="content-body">
+    <div class="container">
+        <div class="row">
+            <main class="col-md-8">
+                <article class="post post-1">
+                    <header class="entry-header">
+                        <h1 class="entry-title">{{ aritcle.title }}</h1>
+                        <div class="entry-meta">
+                            <span class="post-category" article="{{ aritcle.id }}"><a href="#">{{ aritcle.sort.name }}</a></span>
+                            {% for tage in aritcle.tages.all %}
+                                <span class="post-category"><a href="#">{{ tage.name }}</a></span>
+                            {% endfor %}
+                            <span class="post-date"><a href="#"><time class="entry-date"
+                                                                      datetime="2012-11-09T23:15:57+00:00">{{ aritcle.create_time }}</time></a></span>
+                            <span class="post-author"><a href="#">{{ aritcle.user }}</a></span>
+{#                            <span class="comments-link"><a href="#">{{ aritcle.comment_count }} 评论</a></span>#}
+                            <span class="views-count"><a href="#">{{ aritcle.view_count }} 阅读</a></span>
+                        </div>
+                    </header>
+                    <div class="entry-content clearfix">
+                        <p>{{ aritcle.context|safe }}</p>
+                    </div>
+                </article>
+                <section class="comment-area" id="comment-area">
+                    <hr>
+                    {% if not user.is_authenticated  %}
+                        <div class="center"><h4>请<a href="{% url 'blog:login' %}" class="comment-corlor">登录</a>评论</h4></div>
+
+                     {% else %}
+                        <h3>发表评论</h3>
+                         <div  class="comment-form">
+                           {% csrf_token %}
+                            <div class="row">
+{#                                <div class="col-md-4">#}
+{#                                    <label for="id_name">名字：</label>#}
+{#                                    <input type="text" id="id_name" name="name" required>#}
+{#                                </div>#}
+{#                                <div class="col-md-4">#}
+{#                                    <label for="id_email">邮箱：</label>#}
+{#                                    <input type="email" id="id_email" name="email" required>#}
+{#                                </div>#}
+{#                                <div class="col-md-4">#}
+{#                                    <label for="id_url">网址：</label>#}
+{#                                    <input type="text" id="id_url" name="url">#}
+{#                                </div>#}
+                                <div class="col-md-12">
+                                    <label for="id_comment">评论：</label>
+                                    <textarea name="comment" id="id_comment" required></textarea>
+                                    <button type="submit" class="comment-btn">发表</button>
+    {#                                <input type="button"  id="button_1" value="aaa">#}
+    {#                                <input type="button"  id="button_2" value="aaa">#}
+                                </div>
+                            </div>    <!-- row -->
+                        </div>
+                    {% endif %}
+
+                    <div class="comment-list-panel">
+                        <h3>评论列表，共 <span>{{ count }}</span> 条评论</h3>
+                        <ul class="comment-list list-unstyled">
+                            {% for comment in comment %}
+                                <li class="comment-item">
+                                    <span class="nickname">{{ comment.user }}</span>
+                                    <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">{{ comment.create_time }}</time>
+                                    <div class="text">
+                                        {{ comment.content }}
+                                    </div>
+                                </li>
+                            {% endfor %}
+
+                        </ul>
+                    </div>
+                </section>
+            </main>
+            <aside class="col-md-4">
+{#                <div class="widget widget-content">#}
+{#                    <h3 class="widget-title">文章目录</h3>#}
+{#                    <ul>#}
+{#                        <li>#}
+{#                            <a href="#">教程特点</a>#}
+{#                        </li>#}
+{#                        <li>#}
+{#                            <a href="#">谁适合这个教程</a>#}
+{#                        </li>#}
+{#                        <li>#}
+{#                            <a href="#">在线预览</a>#}
+{#                        </li>#}
+{#                        <li>#}
+{#                            <a href="#">资源列表</a>#}
+{#                        </li>#}
+{#                        <li>#}
+{#                            <a href="#">获取帮助</a>#}
+{#                        </li>#}
+{#                    </ul>#}
+{#                </div>#}
+                <div class="widget widget-recent-posts">
+                    <h3 class="widget-title">最新文章</h3>
+                    <ul>
+                        {% for article in article_list %}
+                            <li>
+                                <a href="{% url 'blog:detail' article.id %}">{{ article.title }}</a>
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+                </div>
+                <div class="widget widget-archives">
+                    <h3 class="widget-title">归档</h3>
+                    <ul>
+                        <li>
+                            <a href="#">2017 年 5 月</a>
+                        </li>
+                        <li>
+                            <a href="#">2017 年 4 月</a>
+                        </li>
+                        <li>
+                            <a href="#">2017 年 3 月</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="widget widget-category">
+                    <h3 class="widget-title">分类</h3>
+                    <ul>
+
+                            <li>
+                                <a href="{% url 'blog:sort' 1 %}?sort={{ sort.id }}">{{ aritcle.sort.name }} <span class="post-count"></span></a>
+                            </li>
+
+                    </ul>
+                </div>
+
+                <div class="widget widget-tag-cloud">
+                    <h3 class="widget-title">标签云</h3>
+                    <ul>
+                        {% for tage in aritcle.tages.all %}
+                            <li>
+                                <a href="{% url 'blog:tage' 1 %}?tage={{ tage.id }}">{{ tage.name }}</a>
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+                </div>
+                <div class="rss">
+                    <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block flie %}
+    <script type="text/javascript" src="{% static 'js/jquery-2.1.3.min.js' %}"></script>
+    <script type="text/javascript">
+        {#<form action="#" method="post" class="comment-form">#}
+        {#                <div class="row">#}
+        {#                    <div class="col-md-4">#}
+        {#                        <label for="id_name">名字：</label>#}
+        {#                        <input type="text" id="id_name" name="name" required>#}
+        {#                    </div>#}
+        {#                    <div class="col-md-4">#}
+        {#                        <label for="id_email">邮箱：</label>#}
+        {#                        <input type="email" id="id_email" name="email" required>#}
+        {#                    </div>#}
+        {#                    <div class="col-md-4">#}
+        {#                        <label for="id_url">网址：</label>#}
+        {#                        <input type="text" id="id_url" name="url">#}
+        {#                    </div>#}
+        {#                    <div class="col-md-12">#}
+        {#                        <label for="id_comment">评论：</label>#}
+        {#                        <textarea name="comment" id="id_comment" required></textarea>#}
+        {#                        <button type="submit" class="comment-btn">发表</button>#}
+        {#                    </div>#}
+        {#                </div>    <!-- row -->#}
+        {#            </form>#}
+
+        {#$('#button_1').click(function(){#}
+        {#    $.post('blog:comment', params, function (data) {#}
+        {#        alert(data.errmsg)#}
+        {#    })#}
+        {#    })#}
+            $(function () {
+            {#    $('#button_1').click(function () {#}
+            {#     alert('aaa')#}
+            {##}
+            {##}
+
+                $('.comment-btn').click(function(){
+                    content = $('#id_comment').val()
+                    article_id =$('.post-category').attr('article')
+                    csrf = $('input[name="csrfmiddlewaretoken"]').val()
+                    params = {'article_id':article_id,'content':content,'csrfmiddlewaretoken':csrf}
+                    $.post('{%   url 'blog:comment' %}', params, function (data) {
+                        alert(data.errmsg)
+
+                    })
+                    })
+
+            })
+
+
+   </script>
+{% endblock %}
+
+
